@@ -24,8 +24,10 @@ The code template file is specified with the file-ending `.vcst` among the other
 Besides the different file-ending, the code template file can be considered an almost normal source file, as it can hold any valid C or C++ syntax.
 Additionally, there are special tokens that can be used in the template file:
 
- * $DOXYCOMMENT expects a doxygen documentation comment
- * $DOXYCOMMENT(...) expects a doxygen documentation comment that must contain the specified doxygen-tags in the parentheses
+ * `$DOXYCOMMENT` expects a doxygen documentation comment
+ * `$DOXYCOMMENT(...)` expects a doxygen documentation comment that must contain the specified doxygen-tags in the parentheses
+ * `$INCLUDES` works the same like `$INCLUDES(*)`
+ * `$INCLUDES(...)` expects a certain number of include directives as specified in the argument. An asterix can be used to specify an undefined amount of include directives
  * TODO ...
  * `$ANYTHING` matches everything, i.e. after this token appears, the rest of the file is not checked to conform any style
 
@@ -34,3 +36,7 @@ The test results can be exported to a xml file using the command line option `--
 
 ## useful links
 * https://manpages.org/vera
+* https://github.com/verateam/vera
+
+## useful notes
+* other than stated in the official vera++ docs, the starting column of a token cannot be retrieved by accessing the attribute `columnNumber`. Instead the attribute `column` works in Python
