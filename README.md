@@ -24,18 +24,22 @@ The code template file is specified with the file-ending `.vcst` among the other
 Besides the different file-ending, the code template file can be considered an almost normal source file, as it can hold any valid C or C++ syntax.
 Additionally, there are special tokens that can be used in the template file:
 
- * `$DOXYCOMMENT` expects one doxygen documentation comment. The parameter list contains specific doxygen-tags that must appear within the doxygen comment. If such a doxygen-tag is missing, a style error will be recorded.
- * `$COMMENT` expects one comment with any content.
- * `$INCLUDE` expects one include directives. A parameter can be used to provide the type of the include directive that is expected: ANY (refers to any type of include), LIB (refers to an include with angular brackets) or LOC (refers to an include with quotation marks) .
- * `$TYPEDEF` expects one type definition.
- * `$GLOBVARDEC` expects one global variable declaration containing all the keywords given as parameters.
- * `$GLOBVARDEF` expects one global variable definition containing all the keywords given as parameters.
- * `$FUNCTIONDEC` expects one function declaration containing all the keywords given as parameters.
- * `$FUNCTIONDEF` expects one function definition containing all the keywords given as parameters.
- * `$SEQUENCE` expects a sequence of special tokens as well as a number as the last parameter. The style checker then checks the file if the sequence appears as defined (e.g. `$SEQUENCE($DOXYCOMMENT(details, returns),$FUNCTION(static, inline), 5)` to check for five function definitions with the keywords static and inline that is preceeded with a doxygen comment which contains the \details and \returns tags).
- * `$ANYTHING` matches everything, i.e. after this token appears, the rest of the file is not checked to conform any style.
+* `$ANYTHING` matches everything, i.e. after this token appears, the rest of the file is not checked to conform any style.
+* `$COMMENT` expects one comment with any content.
+* `$DEFINE` expects one define directive
+* `$DOXYCOMMENT` expects one doxygen documentation comment. The parameter list contains specific doxygen-tags that must appear within the doxygen comment. If such a doxygen-tag is missing, a style error will be recorded.
+* `$ENUM` expects one enum definition.
+* `$FUNCTIONDECL` expects one function declaration containing all the keywords given as parameters.
+* `$FUNCTIONDEF` expects one function definition containing all the keywords given as parameters.
+* `$GLOBVARDECL` expects one global variable declaration containing all the keywords given as parameters.
+* `$GLOBVARDEF` expects one global variable definition containing all the keywords given as parameters.
+* `$INCLUDE` expects one include directives. A parameter can be used to provide the type of the include directive that is expected: ANY (refers to any type of include), LIB (refers to an include with angular brackets) or LOC (refers to an include with quotation marks) .
+* `$OPTIONAL` expects one token as parameter, which might or might not appear in the file to be checked.
+* `$SEQUENCE` expects a sequence of special tokens as well as a number as the last parameter. The style checker then checks the file if the sequence appears as defined (e.g. `$SEQUENCE($DOXYCOMMENT(details, returns),$FUNCTIONDEF(static, inline), 5)` to check for five function definitions with the keywords static and inline that is preceeded with a doxygen comment which contains the \details and \returns tags).
+* `$STRUCT` expects one struct definition.
+* `$TYPEDEF` expects one type definition. Note that a typedef including a struct or enum definition is covered completely by this token.
 
-Each style token except the `$ANYTHING` can be followed by a parameter list enclosed in parenthesis. If no parameter list is provided, the default parameters are used.
+Each style token except the `$ANYTHING` can be followed by a parameter list enclosed in parenthesis. If no parameter list is provided, the default parameters are used. A detailed documentation about which parameters can be speciefied is given in the [token documentation](TOKEN_DOCS.md)
 
 ## viewing the results
 The test results can be exported to a xml file using the command line option `--xml-report` (other file formats are also available). The xml reports can be compiled into a html file using the vera-style.xslt file of this repository.
@@ -56,15 +60,17 @@ This rule shall not alter existing source code.
 * to use multiple rules in one vera command, the `--rule` option can be used multiple times in one command
 
 ## TODO list
-* [x] implement the `$DOXYCOMMENT` token
-* [ ] implement the `$COMMENT` token
-* [x] implement the `$INCLUDES` token
-* [ ] implement the `$TYPEDEF` token
-* [ ] implement the `$GLOBVARDEC` token
-* [ ] implement the `$GLOBVARDEF` token
-* [ ] implement the `$FUNCTIONDEC` token
-* [ ] implement the `$FUNCTIONDEF` token
-* [x] \(HIGH PRIORITY) implement the `$SEQUENCE` token
 * [x] implement the `$ANYTHING` token
-* [x] once the `$SEQUENCE` token is implemented, get rid of the parameter for the `$...INCLUDES` token, cause then the preferred way to expect multiple includes would be `$SECUENCE($ANYINCLUDE, *)`
-* [ ] think about an `$OPTIONAL` token which generates no error if the token specified as parameter does not appear.
+* [ ] implement the `$COMMENT` token
+* [ ] implement the `$DEFINE` token
+* [x] implement the `$DOXYCOMMENT` token
+* [ ] implement the `$ENUM` token
+* [ ] implement the `$FUNCTIONDECL` token
+* [ ] implement the `$FUNCTIONDEF` token
+* [ ] implement the `$GLOBVARDECL` token
+* [ ] implement the `$GLOBVARDEF` token
+* [x] implement the `$INCLUDES` token
+* [ ] implement the `$OPTIONAL` token
+* [x] implement the `$SEQUENCE` token
+* [x] implement the `$STRUCT` token
+* [ ] implement the `$TYPEDEF` token
